@@ -1,4 +1,3 @@
-// src/app/cadastro/page.tsx
 'use client'
 
 import { useState } from 'react'
@@ -73,7 +72,6 @@ export default function CadastroPage() {
           <form onSubmit={handleSubmit} className="space-y-6">
             {step === 1 && (
               <>
-                {/* Informações da Empresa */}
                 <div>
                   <label htmlFor="companyName" className="block text-base font-medium text-gray-700 mb-1">
                     Nome da empresa
@@ -188,7 +186,6 @@ export default function CadastroPage() {
 
             {step === 2 && (
               <>
-                {/* Informações do Usuário */}
                 <div>
                   <label htmlFor="userName" className="block text-base font-medium text-gray-700 mb-1">
                     Seu nome
@@ -246,7 +243,6 @@ export default function CadastroPage() {
 
             {step === 3 && (
               <>
-                {/* Revisão */}
                 <div className="space-y-2 text-gray-700">
                   <p><strong>Nome da empresa:</strong> {companyName}</p>
                   <p><strong>CNPJ:</strong> {cnpj}</p>
