@@ -3,17 +3,16 @@ import dotenv from 'dotenv'
 
 dotenv.config()
 
-// Validar variáveis de ambiente
 const {
   AWS_REGION,
-  KEY,
-  SECRET_KEY,
+  AWS_ACCESS_KEY_ID,
+  AWS_SECRET_ACCESS_KEY,
   USERS_TABLE,
   JWT_SECRET,
   PORT
 } = process.env
 
-if (!AWS_REGION || ! KEY || !SECRET_KEY) {
+if (!AWS_REGION || ! AWS_ACCESS_KEY_ID || !AWS_SECRET_ACCESS_KEY) {
   throw new Error('Missing AWS credentials or region in .env')
 }
 if (!USERS_TABLE) {
@@ -26,11 +25,10 @@ if (!JWT_SECRET) {
 
 AWS.config.update({
   region: AWS_REGION,
-  accessKeyId: KEY,
-  secretAccessKey: SECRET_KEY
+  accessKeyId: AWS_ACCESS_KEY_ID,
+  secretAccessKey: AWS_SECRET_ACCESS_KEY
 })
 
-// Exportar cliente e constantes
 export const ddb = new AWS.DynamoDB.DocumentClient()
 export const USERS_TABLE_NAME = USERS_TABLE
 export const JWT_SECRET_KEY = JWT_SECRET

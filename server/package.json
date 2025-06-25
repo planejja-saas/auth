@@ -1,8 +1,11 @@
 {
+  "type": "module",
   "name": "server",
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
+    "create-tables": "node --loader ts-node/esm src/config/createTables.ts",
+    "dev": "node --loader ts-node/esm src/index.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -12,11 +15,16 @@
   "dependencies": {
     "aws-sdk": "^2.1692.0",
     "bcrypt": "^6.0.0",
+    "cors": "^2.8.5",
     "dotenv": "^16.5.0",
     "express": "^5.1.0",
     "jsonwebtoken": "^9.0.2"
   },
   "devDependencies": {
-    "@types/node": "^24.0.4"
+    "@types/aws-sdk": "^0.0.42",
+    "@types/cors": "^2.8.19",
+    "@types/node": "^24.0.4",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.3"
   }
 }

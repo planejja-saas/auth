@@ -29,17 +29,50 @@ export default function CadastroPage() {
   const nextStep = () => setStep(prev => Math.min(prev + 1, 3))
   const prevStep = () => setStep(prev => Math.max(prev - 1, 1))
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
+
     if (step < 3) {
       nextStep()
-    } else {
-      if (password !== confirmPassword) {
-        alert('As senhas não conferem.')
-        return
+      return
+    }
+
+    if (password !== confirmPassword) {
+      alert('As senhas não conferem.')
+      return
+    }
+
+    const payload = {
+      companyName,
+      cnpj,
+      address,
+      city,
+      state,
+      zip,
+      phone,
+      companyEmail,
+      userName,
+      userEmail,
+      password
+    }
+
+    try {
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_AUTH_API_URL}/register`,
+        {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        }
+      )
+      const data = await res.json()
+      if (!res.ok) {
+        throw new Error(data.error || 'Falha ao cadastrar')
       }
-      // TODO: enviar dados para API de cadastro
       router.push('/')
+    } catch (err) {
+      const msg = err instanceof Error ? err.message : 'Erro inesperado'
+      alert(msg)
     }
   }
 
@@ -222,7 +255,7 @@ export default function CadastroPage() {
                     value={password}
                     onChange={e => setPassword(e.target.value)}
                     required
-                    className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-[#FA8F24] focus:ring-2 focus:ring-[#FA8F24] text-base"
+                    className="w-full px-4 py-2	border border-gray-300 rounded-md focus:outline-none focus:border-[#FA8F24] focus:ring-2 focus:ring-[#FA8F24] text-base"
                   />
                 </div>
                 <div>
@@ -235,24 +268,22 @@ export default function CadastroPage() {
                     value={confirmPassword}
                     onChange={e => setConfirmPassword(e.target.value)}
                     required
-                    className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-[#FA8F24] focus:ring-2 focus:ring-[#FA8F24] text-base"
+                    className="w-full px-4 py-2	border border-gray-300 rounded-md focus:outline-none focus:border-[#FA8F24] focus:ring-2 focus:ring-[#FA8F24] text-base"
                   />
                 </div>
               </>
             )}
 
             {step === 3 && (
-              <>
-                <div className="space-y-2 text-gray-700">
-                  <p><strong>Nome da empresa:</strong> {companyName}</p>
-                  <p><strong>CNPJ:</strong> {cnpj}</p>
-                  <p><strong>Endereço:</strong> {address}, {city} - {state}, {zip}</p>
-                  <p><strong>Telefone:</strong> {phone}</p>
-                  <p><strong>Email empresa:</strong> {companyEmail}</p>
-                  <p><strong>Nome usuário:</strong> {userName}</p>
-                  <p><strong>Email usuário:</strong> {userEmail}</p>
-                </div>
-              </>
+              <div className="space-y-2 text-gray-700">
+                <p><strong>Nome da empresa:</strong> {companyName}</p>
+                <p><strong>CNPJ:</strong> {cnpj}</p>
+                <p><strong>Endereço:</strong> {address}, {city} - {state}, {zip}</p>
+                <p><strong>Telefone:</strong> {phone}</p>
+                <p><strong>Email empresa:</strong> {companyEmail}</p>
+                <p><strong>Nome usuário:</strong> {userName}</p>
+                <p><strong>Email usuário:</strong> {userEmail}</p>
+              </div>
             )}
 
             <div className="flex justify-between mt-4">
@@ -260,7 +291,7 @@ export default function CadastroPage() {
                 <button
                   type="button"
                   onClick={prevStep}
-                  className="px-4 py-2 text-base text-gray-700 border border-gray-300 rounded-md hover:bg-gray-100 transition"
+                  className="px-4 py-2 text-base text-gray-700	border border-gray-300 rounded-md hover:bg-gray-100 transition"
                 >
                   Anterior
                 </button>
@@ -268,7 +299,7 @@ export default function CadastroPage() {
 
               <button
                 type="submit"
-                className="px-6 py-2 text-base text-white bg-[#FA8F24] font-semibold rounded-md hover:bg-[#e38d1f] transition"
+                className="px-6 py-2 text-base text-white	bg-[#FA8F24] font-semibold rounded-md hover:bg-[#e38d1f] transition"
               >
                 {step < 3 ? 'Próximo' : 'Confirmar Cadastro'}
               </button>
@@ -277,7 +308,7 @@ export default function CadastroPage() {
 
           <p className="mt-6 text-center text-base text-gray-600">
             Já tem conta?{' '}
-            <Link href="/" className="text-[#FA8F24] font-semibold hover:underline">
+            <Link href="/" className="text-[#FA8F24]	font-semibold hover:underline">
               Entrar
             </Link>
           </p>
