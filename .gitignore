@@ -1,2 +1,10 @@
 # dependencies
 node_modules/
+
+# Next.js / client
+client/.env.local
+client/.env.*.local
+
+# Server env
+server/.env
+server/.env.*.local
